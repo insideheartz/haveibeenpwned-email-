@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 
 const puppeteer = require("puppeteer");
 const fs = require('fs');
@@ -25,36 +24,4 @@ async function isPwned(email) {
   }
 }
 
-const args = process.argv;
-if (process.stdin.isTTY) {
-  const { program } = require('commander');
-  program
-    .version('0.0.1', '-v, --version', 'Output the current version')
-    .description('Check if an email has been pwned')
-    .option("-o --out <output_filename>", "Output redirections into a file")
-    .arguments('<email>')
-    .action(async (email, args) => {
-      const result = await isPwned(email);
-      if (args.out) {
-        const outputFile = /\.json$/.test(args.out) ? args.out : `${args.out}.json`;
-        fs.writeFileSync(`./${outputFile}`, JSON.stringify(result, null, 2));
-      } else {
-        console.log(result);
-      }
-    })
-    .parse(args);
-} else {
-  const { createInterface } = require('readline');
-  const { 2: out, 3: outFilename } = args;
-  if (out && !outFilename) {
-    console.log("Missing required <output_filename> for '-o, --out <output_filename>'");
-  }
-  const rl = createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-  });
-  rl.on('line', url => {
-    isPwned(url, { out: out && outFilename });
-  });
-}
+inPwned(email);
