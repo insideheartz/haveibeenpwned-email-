@@ -1,2 +1,2 @@
 # haveibeenpwned-email-
-Scraping haveibennpwned into array using puppetteer 
+This tool is used to Scraping haveibennpwned into array using puppetteer 
